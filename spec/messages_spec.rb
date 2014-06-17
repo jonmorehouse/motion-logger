@@ -1,12 +1,15 @@
 describe "Messages Class" do
   before do 
     @app = UIApplication.sharedApplication
-    @messages = Loggly::Messages.new 5, do 
-      puts "HERE"
+    @counter = 0
+    @messages = Loggly::Messages.new :size => 1, do |results|
+      @results = results
+      @counter += 1
     end
   end
 
   it "should store messages" do
-    1.should == 1
+    @messages.add("new message")
+    @counter.should == 1
   end
 end

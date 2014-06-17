@@ -1,56 +1,64 @@
 module Loggly
   class Messages
 
-    def initialize(max_size, &cb)
-      @max_size = max_size
-      @store = Array.new(max_size)
+    @@size = 50
+
+    def initialize(opts = {}, &cb)
       @cb = cb
+      # start location watcher if applicable
+      if not opts.has_key?(:no_location) or opts[:no_location] == false
+        location_handler
+      end
+      # create internal array
+      if not opts.has_key?(:size)
+        opts[:size] = @@size
+      end
+      @size = opts[:size]
+    
+      @store = Array.new
     end
 
-    def add(msg)
-      add_item(msg)
+    def add(msg, opts = {})
+      # push item into array
+      @store.push(create_item(msg, opts))
+      # check if array is full
       after_hook
     end
 
+    def flush()
+      @cb.call(@store.shift(@store.length))
+    end
+
     private
-    def add_item(msg)
-      item = create_item(msg)
-      @store.push Array.new(2)
-    end
-
-    def after_hook()
-      # check to see if list is ready to be sent
-
-    end
-
-    def create_item(msg, no_location = false)
-
-      # normalize to a hash
+    def create_item(msg, opts = {})
       msg = {
         msg: msg,
         timestamp: Time.now.to_s
       }
-      # add location data to the log event
-      if not no_location and ::BW::Location.authorized? and @location
+      if not opts.has_key? :no_location or opts[:no_location] == false and @location
         msg[:location] = @location
       end
-
       return msg
     end
 
-    def watch_location
+    def after_hook
+      if @store.length == @size
+        @cb.call(@store.shift(@size))
+      end
+    end
 
+    def location_handler
+      # initialize location manager
+      ::BW::Location.location_manager
       ::BW::Location::get_significant do |location|
         if location.is_a?(Hash) and location[:error]
-          return
+          @location = {:error => location[:error]}
+        else
+          @location = {
+            :latitude => location[:to].latitude,
+            :longitude => location[:to].longitude
+          }
         end
-
-        # 
-        @location = {
-          latitude: location.latitude,
-          longitude: location.longitude
-
-        }
       end
     end
   end
