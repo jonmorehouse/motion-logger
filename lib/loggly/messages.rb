@@ -31,21 +31,27 @@ module Loggly
         timestamp: Time.now.to_s
       }
       # add location data to the log event
-      if not no_location
-        msg[:location] = get_location
+      if not no_location and ::BW::Location.authorized? and @location
+        msg[:location] = @location
       end
 
+      return msg
     end
 
-    def get_location
+    def watch_location
 
-      ::BW::Location.get_once() do |location|
-        puts "here"
-        puts location
+      ::BW::Location::get_significant do |location|
+        if location.is_a?(Hash) and location[:error]
+          return
+        end
+
+        # 
+        @location = {
+          latitude: location.latitude,
+          longitude: location.longitude
+
+        }
       end
-
-      #::BW::Location.error(type)
     end
-
   end
 end
