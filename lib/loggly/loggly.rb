@@ -1,31 +1,30 @@
-class Loggly
+module Loggly
+  class Loggly
 
-  @@max_cache = 50
+    @@max_cache = 50
 
-  
-  def initialize(params = {})
+    def initialize(params = {})
+      #@messages = Messages.new() 
 
-  end
+    end
 
-  def log(msg)
+    def log(msg)
+      # puts on the store 
 
-    # puts on the store 
+    end
 
-  end
+    def send()
 
-  def send()
+      # send all log messages
+      
+    end
 
-    # send all log messages
-    
-  end
+    private
+    def after_hook()
 
-  private
-  def after_hook()
+      # check messages length
+      # if message length is too great then call the 
 
-    # check messages length
-    # if message length is too great then call the 
-
-  end
-
-
+    end
+end
 end
