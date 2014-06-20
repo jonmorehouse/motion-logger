@@ -3,7 +3,7 @@ $:.unshift("/Library/RubyMotion/lib")
 require 'motion/project/template/ios'
 require './lib/loggly'
 require 'bubble-wrap/location'
-require 'afmotion'
+require 'motion-loggly'
 
 begin
   require 'bundler'
@@ -13,7 +13,7 @@ end
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
-  app.name = 'Loggly'
+  app.name = 'Logger'
   app.frameworks += ["CoreLocation"]
 end
 

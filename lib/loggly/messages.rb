@@ -1,4 +1,4 @@
-module Loggly
+module Log
   class Messages
 
     @@size = 50

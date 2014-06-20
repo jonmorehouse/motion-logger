@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/jonmorehouse/motion-loggly
+  revision: 5f98747cba90728b340ca7c6372ecb3ffe2814de
+  specs:
+    loggly (0.0.2)
+
+GIT
   remote: git://github.com/rubymotion/bubblewrap
   revision: 26b0e5e9b6a9fe34551c396e1f606d6133134385
   specs:
@@ -66,4 +72,5 @@ PLATFORMS
 DEPENDENCIES
   afmotion
   bubble-wrap!
+  loggly!
   rake
