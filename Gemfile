@@ -5,5 +5,9 @@ gem 'afmotion'
 gem 'bubble-wrap', :git => "git://github.com/rubymotion/bubblewrap"
 gem 'loggly', :git => "git://github.com/jonmorehouse/motion-loggly" 
 
+group :development do
+  gem 'motion-stump'
+end
+
 
 

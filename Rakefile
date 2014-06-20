@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 $:.unshift("/Library/RubyMotion/lib")
 require 'motion/project/template/ios'
-require './lib/loggly'
+require './lib/logger'
 require 'bubble-wrap/location'
-require 'motion-loggly'
+require 'loggly'
 
 begin
   require 'bundler'

@@ -1,15 +1,27 @@
 describe "Messages Class" do
-  before do 
-    @app = UIApplication.sharedApplication
-    @counter = 0
-    @messages = Loggly::Messages.new :size => 1, do |results|
-      @results = results
-      @counter += 1
+
+  describe "high level message storing / callback processing" do
+
+    before do
+      @callback = Proc.new do |msgs|
+      end
+      @messages = Logger::Messages.new no_location: true, size: 1 do
+        @callback.call()
+      end
+
+    end
+
+    it "should store messages" do
+      #@messages.add("new message")
+      #@counter.should == 1
+      1.should == 1
+    end
+
+    it "should call the passed in callback when the array is full" do
+
+      1.should == 1
     end
   end
 
-  it "should store messages" do
-    @messages.add("new message")
-    @counter.should == 1
-  end
+
 end

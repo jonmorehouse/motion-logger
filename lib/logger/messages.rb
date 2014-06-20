@@ -1,4 +1,4 @@
-module Log
+module Logger
   class Messages
 
     @@size = 50
